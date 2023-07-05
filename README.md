@@ -40,7 +40,7 @@ We use GitHub for versioning. For the versions available, see the [tags on this 
 
 ## License
 
-No Licnese
+No License
 
 ## Acknowledgments
 
