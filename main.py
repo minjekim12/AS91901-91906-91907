@@ -12,7 +12,7 @@ from tkinter import *
 # Creates root widget - Main window for GUI
 root = Tk() 
 root.title("SpellCraft")
-root.iconbitmap("resources/S.ico") # icon does not seem to show at the moment. will be fixed later.
+
 # Main window properties
 window_width = 1000
 window_height = 600
