@@ -56,7 +56,7 @@ main_menu_bg_label.place(x = 0,y = 0)
 
 # Add text
 game_description_label = Label(root, text = "FILL IN THE LETTERS TO MAKE AS MANY \n WORDS AS YOU CAN!!",
-               font=("DIN Alternate", 24), fg=("#1b3652"), padx=15, pady=3)
+               font=("DIN Alternate", 24), fg=("#1b3652"), bg=("white"), padx=15, pady=3)
 game_description_label.place(x=240, y=340)
 
 tutorial_button = Button(root, text="TUTORIAL", font=("DIN Alternate", 24), fg=("#1b3652"), bg=("white"), padx=7, pady=9, borderwidth=0) #command=TUTORIALPAGE)
