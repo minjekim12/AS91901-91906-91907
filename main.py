@@ -72,6 +72,6 @@ settings_button.place(x=555, y=420)
 
 
 
-# ------------------ EXECUTE PYTHON ------------------------
+# ------------------ EXECUTE PYTHON -
 # Runs the program and loops to keep it open until closed
 root.mainloop() 
