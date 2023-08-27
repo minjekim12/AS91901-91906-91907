@@ -4,70 +4,6 @@ import random
 import string
 from tkinter import messagebox
 
-class SpellingGame:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Spelling Game")
-        
-        self.score = 0
-        self.time_left = 60
-        
-        self.letter_label = tk.Label(root, text="", font=("Helvetica", 24))
-        self.letter_label.pack(pady=20)
-        
-        self.entry = tk.Entry(root, font=("Helvetica", 16))
-        self.entry.pack(pady=10)
-        
-        self.score_label = tk.Label(root, text="Score: 0", font=("Helvetica", 16))
-        self.score_label.pack(pady=10)
-        
-        self.timer_label = tk.Label(root, text="Time left: 60", font=("Helvetica", 16))
-        self.timer_label.pack(pady=10)
-        
-        self.entry.bind('<Return>', lambda event: self.check_word(event))
-        
-        self.update_letter()
-        self.countdown()
-
-    def update_letter(self):
-        self.letter = random.choice(string.ascii_uppercase)
-        self.word_length = random.randint(3, 6)
-        self.letter_label.config(text=f"Letter: {self.letter}  Word length: {self.word_length}")
-        self.entry.delete(0, tk.END)
-        
-    def countdown(self):
-        if self.time_left > 0:
-            self.timer_label.config(text=f"Time left: {self.time_left}")
-            self.time_left -= 1
-            self.root.after(1000, self.countdown)
-        else:
-            messagebox.showinfo("Game Over", f"Your score: {self.score}")
-            self.start_button.config(state="normal")
-
-    def check_word(self, event):
-        user_word = self.entry.get()
-        print("yes")
-
-        if len(user_word) == self.word_length and user_word[0].lower() == self.letter.lower():
-            if self.is_valid_word(user_word.lower()):
-                self.score += 1
-                self.score_label.config(text=f"Score: {self.score}")
-                self.update_letter()
-            else:
-                messagebox.showinfo("Invalid Word", "Please enter a valid English word.")
-        else:
-            if len(user_word) != self.word_length:
-                messagebox.showinfo("Invalid Input", f"Please enter a word with {self.word_length} letters.")
-            elif user_word[0].lower() != self.letter.lower():
-                messagebox.showinfo("Invalid Input", f"Please enter a word that starts with the letter {self.letter}.")
-
-        self.entry.delete(0, tk.END)
-
-    def is_valid_word(self, word):
-        with open('valid_words.txt', 'r') as word_file:
-            valid_words = set(word.strip().lower() for word in word_file)
-        return word in valid_words
-
 class SpellCraftApp:
     def __init__(self, root):
         self.root = root
@@ -206,7 +142,99 @@ class SpellCraftApp:
         yes_button_label.photo = yes_photoimage
         yes_button_label.bind("<Button-1>", yes_button_click)
 
-        # ... (rest of the options_window setup)
+        no_button_image = Image.open("resources/no_button.png")
+        no_photoimage = ImageTk.PhotoImage(no_button_image)
+        no_button_label = tk.Label(options_window, image=no_photoimage, bg="#024762")
+        no_button_label.place(x=260, y=205)
+        no_button_label.photo = no_photoimage
+        no_button_label.bind("<Button-1>", no_button_click)
+
+class SpellingGame:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Spelling Game")
+        
+        self.score = 0
+        self.time_left = 60
+        
+        self.letter_label = tk.Label(root, text="", font=("DIN Alternate", 24),bg="white", fg="black", borderwidth=0,highlightbackground="white")
+        self.letter_label.place(x=340, y=50)
+        
+        self.score_label = tk.Label(root, text="Score: 0", font=("DIN Alternate", 24),bg="white", fg="black", borderwidth=0,highlightbackground="white")
+        self.score_label.place(x=100, y=50)
+        
+        self.timer_label = tk.Label(root, text="Time left: 60", font=("DIN Alternate", 24), bg="white", fg="black", borderwidth=0,highlightbackground="white")
+        self.timer_label.place(x=720, y=50)
+        
+        self.entry = tk.Entry(root, font=("DIN Alternate", 55), bg="white", fg="black", borderwidth=0,highlightbackground="white", width=15)
+        self.entry.place(x=280, y=190)
+        self.entry.bind('<Return>', self.check_word)
+        
+        self.update_letter()
+        self.countdown()
+
+    def update_letter(self):
+        self.letter = random.choice(string.ascii_uppercase)
+        self.word_length = random.randint(3, 6)
+        self.letter_label.config(text=f"Letter: {self.letter}  Word length: {self.word_length}")
+        self.entry.delete(0, tk.END)
+        
+    def countdown(self):
+        if self.time_left > 0:
+            self.timer_label.config(text=f"Time left: {self.time_left}")
+            self.time_left -= 1
+            self.root.after(1000, self.countdown)
+        else:
+            self.finish_game()
+
+    def check_word(self, event):
+        user_word = self.entry.get()
+
+        if len(user_word) == self.word_length and user_word[0].lower() == self.letter.lower():
+            if self.is_valid_word(user_word.lower()):
+                self.score += 1
+                self.score_label.config(text=f"Score: {self.score}")
+                self.update_letter()
+            else:
+                messagebox.showinfo("Invalid Word", "Please enter a valid English word.")
+        else:
+            if len(user_word) != self.word_length:
+                messagebox.showinfo("Invalid Input", f"Please enter a word with {self.word_length} letters.")
+            elif user_word[0].lower() != self.letter.lower():
+                messagebox.showinfo("Invalid Input", f"Please enter a word that starts with the letter {self.letter}.")
+
+        self.entry.delete(0, tk.END)
+
+    def is_valid_word(self, word):
+        with open('valid_words.txt', 'r') as word_file:
+            valid_words = set(word.strip().lower() for word in word_file)
+        return word in valid_words
+
+    def finish_game(self):
+        self.entry.config(state="disabled")
+        
+        # Display a messagebox with score and options
+        choice = messagebox.askquestion("Game Over", f"Your score: {self.score}\n\nRestart the game?", icon="info")
+        
+        if choice == "yes":
+            self.restart_game()
+        else:
+            self.go_to_main_menu()
+
+    def restart_game(self):
+        self.entry.config(state="normal")
+        self.score = 0
+        self.time_left = 60
+        self.update_letter()
+        self.score_label.config(text="Score: 0")
+        self.timer_label.config(text="Time left: 60")
+        self.entry.delete(0, tk.END)
+        self.countdown()
+ 
+    def go_to_main_menu(self):
+        app.main_menu()
+    
+
 
 # Main Window Properties
 root = tk.Tk()
