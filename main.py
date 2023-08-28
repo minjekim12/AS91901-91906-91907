@@ -1,3 +1,15 @@
+"""
+Author: Minje Kim
+
+Date Created: June 27, 2023
+
+Description: SpellCraft is an interactive literacy quiz program
+            that allows learners to be engaged and encouraged
+            to test and develop their English vocabulary
+            and spelling skills.
+"""
+
+
 import tkinter as tk
 from PIL import ImageTk, Image
 import random
@@ -157,19 +169,22 @@ class SpellingGame:
         self.score = 0
         self.time_left = 60
         
-        self.letter_label = tk.Label(root, text="", font=("DIN Alternate", 24),bg="white", fg="black", borderwidth=0,highlightbackground="white")
-        self.letter_label.place(x=340, y=50)
+        self.letter_label = tk.Label(root, text="", font=("DIN Alternate", 40),bg="#98eaf4", fg="black", borderwidth=0,highlightbackground="white")
+        self.letter_label.place(x=275, y=50)
         
-        self.score_label = tk.Label(root, text="Score: 0", font=("DIN Alternate", 24),bg="white", fg="black", borderwidth=0,highlightbackground="white")
-        self.score_label.place(x=100, y=50)
+        self.score_label = tk.Label(root, text="Score: 0", font=("DIN Alternate", 24),bg="#98eaf4", fg="black", borderwidth=0,highlightbackground="white")
+        self.score_label.place(x=300, y=110)
         
-        self.timer_label = tk.Label(root, text="Time left: 60", font=("DIN Alternate", 24), bg="white", fg="black", borderwidth=0,highlightbackground="white")
-        self.timer_label.place(x=720, y=50)
+        self.timer_label = tk.Label(root, text="Time left: 60", font=("DIN Alternate", 24), bg="#98eaf4", fg="black", borderwidth=0,highlightbackground="white")
+        self.timer_label.place(x=550, y=110)
         
         self.entry = tk.Entry(root, font=("DIN Alternate", 55), bg="white", fg="black", borderwidth=0,highlightbackground="white", width=15)
         self.entry.place(x=280, y=190)
         self.entry.bind('<Return>', self.check_word)
-        
+
+        self.pass_button = tk.Button(root, text="PASS", font=("DIN Alternate", 40), bg="white", fg="black", borderwidth=0,highlightbackground="white", width=9, command=self.pass_prompt)
+        self.pass_button.place(x=376, y=350)
+
         self.update_letter()
         self.countdown()
 
@@ -178,7 +193,12 @@ class SpellingGame:
         self.word_length = random.randint(3, 6)
         self.letter_label.config(text=f"Letter: {self.letter}  Word length: {self.word_length}")
         self.entry.delete(0, tk.END)
-        
+    
+    def pass_prompt(self):
+        self.score -= 1
+        self.update_letter()
+        self.score_label.config(text=f"Score: {self.score}")
+
     def countdown(self):
         if self.time_left > 0:
             self.timer_label.config(text=f"Time left: {self.time_left}")
