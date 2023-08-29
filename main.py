@@ -124,6 +124,9 @@ class SpellCraftApp:
         self.game_bg_label = tk.Label(self.root, image=self.game_bg)
         self.game_bg_label.place(x=0, y=0)
         game = SpellingGame(self.root)
+        self.in_game_page = True
+        game.start_game()  # Start the game and the timer
+
 
     def open_toplevel(self):
         options_window = tk.Toplevel(root)
@@ -165,9 +168,13 @@ class SpellingGame:
     def __init__(self, root):
         self.root = root
         self.root.title("Spelling Game")
+
+        
         
         self.score = 0
         self.time_left = 60
+        self.timer_running = False  # New attribute to track the timer status
+        
         
         self.letter_label = tk.Label(root, text="", font=("DIN Alternate", 40),bg="#98eaf4", fg="black", borderwidth=0,highlightbackground="white")
         self.letter_label.place(x=275, y=50)
@@ -185,8 +192,35 @@ class SpellingGame:
         self.pass_button = tk.Button(root, text="PASS", font=("DIN Alternate", 40), bg="white", fg="black", borderwidth=0,highlightbackground="white", width=9, command=self.pass_prompt)
         self.pass_button.place(x=376, y=350)
 
+        # Store the game page status
+        self.in_game_page = False
+
+        
+        self.game_options_button = tk.Button(
+            root,
+            text="X",
+            font=("DIN Alternate", 20),
+            bg="blue",
+            padx=7,
+            pady=5,
+            borderwidth=0,
+            highlightbackground="#98eaf4",
+            command=self.open_game_toplevel,  # Call the method to open the options window
+        )
+        self.game_options_button.place(x=20, y=20)
+
+
         self.update_letter()
         self.countdown()
+
+
+    def start_timer(self):
+        if not self.timer_running:
+            self.timer_running = True
+            self.countdown()
+
+    def stop_timer(self):
+        self.timer_running = False
 
     def update_letter(self):
         self.letter = random.choice(string.ascii_uppercase)
@@ -199,13 +233,13 @@ class SpellingGame:
         self.update_letter()
         self.score_label.config(text=f"Score: {self.score}")
 
-    def countdown(self):
-        if self.time_left > 0:
-            self.timer_label.config(text=f"Time left: {self.time_left}")
-            self.time_left -= 1
-            self.root.after(1000, self.countdown)
-        else:
-            self.finish_game()
+    def countdown(self):  # Only run the countdown if in game page
+            if self.time_left > 0 and self.timer_running:
+                self.timer_label.config(text=f"Time left: {self.time_left}")
+                self.time_left -= 1
+                self.root.after(1000, self.countdown)
+            elif self.time_left == 0 and self.timer_running:
+                self.finish_game()
 
     def check_word(self, event):
         user_word = self.entry.get()
@@ -230,8 +264,13 @@ class SpellingGame:
             valid_words = set(word.strip().lower() for word in word_file)
         return word in valid_words
 
+    def start_game(self):
+        self.root.after(0, self.start_timer)  # Start the timer when the game starts
+        self.update_letter()
+
     def finish_game(self):
         self.entry.config(state="disabled")
+        self.stop_timer()
         
         # Display a messagebox with score and options
         choice = messagebox.askquestion("Game Over", f"Your score: {self.score}\n\nRestart the game?", icon="info")
@@ -244,7 +283,7 @@ class SpellingGame:
     def restart_game(self):
         self.entry.config(state="normal")
         self.score = 0
-        self.time_left = 60
+        self.time_left = 60  # Reset the timer to its initial value
         self.update_letter()
         self.score_label.config(text="Score: 0")
         self.timer_label.config(text="Time left: 60")
@@ -252,7 +291,52 @@ class SpellingGame:
         self.countdown()
  
     def go_to_main_menu(self):
+        self.stop_timer()  # Stop the timer when going back to the main menu
         app.main_menu()
+        self.in_game_page = False
+        self.time_left = 60  # Reset the timer to its initial value 
+
+    # Inside the SpellingGame class
+
+    def open_game_toplevel(self):
+        game_options_window = tk.Toplevel(self.root)
+        game_options_window.title("Game Options")
+        game_options_window.geometry("500x380")
+        game_options_window['bg'] = "#024762"
+
+        def yes_game_button_click(event):
+            game_options_window.destroy()  # Close the top-level window
+            self.go_to_main_menu()          # Return to the main menu
+
+        def no_game_button_click(event):
+            game_options_window.destroy()  # Close the top-level window
+
+        game_options_window.grab_set()  # Prevent interactions with the main window
+
+        quit_game_image = Image.open("resources/quit_game_new.png")
+        quit_game_photoimage = ImageTk.PhotoImage(quit_game_image)
+        quit_game_label = tk.Label(game_options_window, image=quit_game_photoimage, bg="#024762")
+        quit_game_label.place(x=80, y=50)
+        quit_game_label.photo = quit_game_photoimage
+
+        yes_button_image = Image.open("resources/yes_button.png")
+        yes_photoimage = ImageTk.PhotoImage(yes_button_image)
+        yes_button_label = tk.Label(game_options_window, image=yes_photoimage, bg="#024762")
+        yes_button_label.place(x=50, y=200)
+        yes_button_label.photo = yes_photoimage
+        yes_button_label.bind("<Button-1>", yes_game_button_click)
+
+        no_button_image = Image.open("resources/no_button.png")
+        no_photoimage = ImageTk.PhotoImage(no_button_image)
+        no_button_label = tk.Label(game_options_window, image=no_photoimage, bg="#024762")
+        no_button_label.place(x=260, y=205)
+        no_button_label.photo = no_photoimage
+        no_button_label.bind("<Button-1>", no_game_button_click)
+    
+
+    
+
+        
     
 
 
