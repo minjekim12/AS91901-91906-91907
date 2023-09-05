@@ -144,11 +144,11 @@ class SpellCraftApp:
 
         options_window.grab_set()  # Prevent interactions with the main window
 
-        quit_game_image = Image.open("resources/quit_game_new.png")
-        quit_game_photoimage = ImageTk.PhotoImage(quit_game_image)
-        quit_game_label = tk.Label(options_window, image=quit_game_photoimage, bg="#024762")
-        quit_game_label.place(x=80, y=50)
-        quit_game_label.photo = quit_game_photoimage
+        quit_program_image = Image.open("resources/quit_program?.png")
+        quit_program_photoimage = ImageTk.PhotoImage(quit_program_image)
+        quit_program_label = tk.Label(options_window, image=quit_program_photoimage, bg="#024762")
+        quit_program_label.place(x=80, y=50)
+        quit_program_label.photo = quit_program_photoimage
 
         yes_button_image = Image.open("resources/yes_button.png")
         yes_photoimage = ImageTk.PhotoImage(yes_button_image)
