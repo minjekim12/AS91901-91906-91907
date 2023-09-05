@@ -113,6 +113,19 @@ class SpellCraftApp:
         self.tutorial_bg_label = tk.Label(self.root, image=self.tutorial_bg)
         self.tutorial_bg_label.place(x=0, y=0)
 
+        self.open_tutorial_toplevel_button = tk.Button(
+            self.root,
+            text="X",
+            font=("DIN Alternate", 20),
+            bg="blue",
+            padx=7,
+            pady=5,
+            borderwidth=0,
+            highlightbackground="#98eaf4",
+            command=self.open_tutorial_toplevel,
+        )
+        self.open_tutorial_toplevel_button.place(x=20, y=20)
+
     def start_game(self):
         self.main_menu_bg_label.destroy()
         self.game_description_label.destroy()
@@ -163,6 +176,42 @@ class SpellCraftApp:
         no_button_label.place(x=260, y=205)
         no_button_label.photo = no_photoimage
         no_button_label.bind("<Button-1>", no_button_click)
+
+    def open_tutorial_toplevel(self):
+        tutorial_options_window = tk.Toplevel(self.root)
+        tutorial_options_window.title("Tutorial Options")
+        tutorial_options_window.geometry("500x380")
+        tutorial_options_window['bg'] = "#024762"
+
+        def yes_game_button_click(event):
+            tutorial_options_window.destroy()  # Close the top-level window
+            self.main_menu()          # Return to the main menu
+
+        def no_game_button_click(event):
+            tutorial_options_window.destroy()  # Close the top-level window
+
+        tutorial_options_window.grab_set()  # Prevent interactions with the main window
+
+        quit_tutorial_image = Image.open("resources/quit_tutorial?.png")
+        quit_tutorial_photoimage = ImageTk.PhotoImage(quit_tutorial_image)
+        quit_tutorial_label = tk.Label(tutorial_options_window, image=quit_tutorial_photoimage, bg="#024762")
+        quit_tutorial_label.place(x=10, y=50)
+        quit_tutorial_label.photo = quit_tutorial_photoimage
+
+        yes_button_image = Image.open("resources/yes_button.png")
+        yes_photoimage = ImageTk.PhotoImage(yes_button_image)
+        yes_button_label = tk.Label(tutorial_options_window, image=yes_photoimage, bg="#024762")
+        yes_button_label.place(x=50, y=200)
+        yes_button_label.photo = yes_photoimage
+        yes_button_label.bind("<Button-1>", yes_game_button_click)
+
+        no_button_image = Image.open("resources/no_button.png")
+        no_photoimage = ImageTk.PhotoImage(no_button_image)
+        no_button_label = tk.Label(tutorial_options_window, image=no_photoimage, bg="#024762")
+        no_button_label.place(x=260, y=205)
+        no_button_label.photo = no_photoimage
+        no_button_label.bind("<Button-1>", no_game_button_click)
+        
 
 class SpellingGame:
     def __init__(self, root):
