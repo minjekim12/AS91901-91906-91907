@@ -15,6 +15,7 @@ from PIL import ImageTk, Image
 import random
 import string
 from tkinter import messagebox
+import pygame
 
 class SpellCraftApp:
     def __init__(self, root):
@@ -261,6 +262,13 @@ class SpellingGame:
 
         self.update_letter()
         self.countdown()
+        self.play_bgm()
+
+    pygame.mixer.init()
+
+    def play_bgm(self):
+        pygame.mixer.music.load("resources/background_music.mp3")
+        pygame.mixer.music.play(loops = -1)
 
 
     def start_timer(self):
@@ -320,6 +328,7 @@ class SpellingGame:
     def finish_game(self):
         self.entry.config(state="disabled")
         self.stop_timer()
+        pygame.mixer.music.stop()
         
         # Display a messagebox with score and options
         choice = messagebox.askquestion("Game Over", f"Your score: {self.score}\n\nRestart the game?", icon="info")
@@ -338,12 +347,14 @@ class SpellingGame:
         self.timer_label.config(text="Time left: 60")
         self.entry.delete(0, tk.END)
         self.countdown()
+        pygame.mixer.music.play()
  
     def go_to_main_menu(self):
         self.stop_timer()  # Stop the timer when going back to the main menu
         app.main_menu()
         self.in_game_page = False
         self.time_left = 60  # Reset the timer to its initial value 
+        pygame.mixer.music.stop()
 
     # Inside the SpellingGame class
 
