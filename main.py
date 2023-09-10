@@ -86,7 +86,7 @@ class SpellCraftApp:
             padx=7,
             pady=9,
             borderwidth=0,
-            # command=your_settings_function,  # Uncomment and replace with your settings function
+            command=self.settings_page, 
         )
         self.settings_button.place(x=555, y=420)
 
@@ -126,6 +126,29 @@ class SpellCraftApp:
             command=self.open_tutorial_toplevel,
         )
         self.open_tutorial_toplevel_button.place(x=20, y=20)
+
+    def settings_page(self):
+        self.main_menu_bg_label.destroy()
+        self.game_description_label.destroy()
+        self.tutorial_button.destroy()
+        self.game_start_button.destroy()
+        self.settings_button.destroy()
+        self.settings_open = Image.open("resources/settings_bg.png")
+        self.settings_bg = ImageTk.PhotoImage(self.settings_open)
+        self.settings_bg_label = tk.Label(self.root, image=self.settings_bg)
+        self.settings_bg_label.place(x=0, y=0)
+
+        self.open_settings_toplevel_button = tk.Button(
+            self.root,
+            text="X",
+            font=("DIN Alternate", 20),
+            bg="blue",
+            padx=7,
+            pady=5,
+            borderwidth=0,
+            highlightbackground="#98eaf4",
+        )
+        self.open_settings_toplevel_button.place(x=20, y=20)
 
     def start_game(self):
         self.main_menu_bg_label.destroy()
