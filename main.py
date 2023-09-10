@@ -16,6 +16,7 @@ import random
 import string
 from tkinter import messagebox
 import pygame
+import webbrowser
 
 class SpellCraftApp:
     def __init__(self, root):
@@ -151,6 +152,19 @@ class SpellCraftApp:
         )
         self.open_settings_toplevel_button.place(x=20, y=20)
 
+        self.share_button = tk.Button(
+            self.root,
+            text="OPEN GITHUB LINK",
+            font=("DIN Alternate", 16),
+            bg="blue",
+            padx=7,
+            pady=5,
+            borderwidth=0,
+            highlightbackground="#98eaf4",
+            command=self.open_github_link
+        )
+        self.share_button.place(x=600, y=388)
+
     def start_game(self):
         self.main_menu_bg_label.destroy()
         self.game_description_label.destroy()
@@ -271,6 +285,9 @@ class SpellCraftApp:
         no_button_label.place(x=260, y=205)
         no_button_label.photo = no_photoimage
         no_button_label.bind("<Button-1>", no_settings_button_click)
+
+    def open_github_link(self):
+        webbrowser.open("https://github.com/minjekim12/AS91901-91906-91907",new=1)
 
 class SpellingGame:
     def __init__(self, root):
