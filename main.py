@@ -147,6 +147,7 @@ class SpellCraftApp:
             pady=5,
             borderwidth=0,
             highlightbackground="#98eaf4",
+            command=self.open_settings_toplevel
         )
         self.open_settings_toplevel_button.place(x=20, y=20)
 
@@ -207,11 +208,11 @@ class SpellCraftApp:
         tutorial_options_window.geometry("500x380")
         tutorial_options_window['bg'] = "#024762"
 
-        def yes_game_button_click(event):
+        def yes_tutorial_button_click(event):
             tutorial_options_window.destroy()  # Close the top-level window
             self.main_menu()          # Return to the main menu
 
-        def no_game_button_click(event):
+        def no_tutorial_button_click(event):
             tutorial_options_window.destroy()  # Close the top-level window
 
         tutorial_options_window.grab_set()  # Prevent interactions with the main window
@@ -227,15 +228,49 @@ class SpellCraftApp:
         yes_button_label = tk.Label(tutorial_options_window, image=yes_photoimage, bg="#024762")
         yes_button_label.place(x=50, y=200)
         yes_button_label.photo = yes_photoimage
-        yes_button_label.bind("<Button-1>", yes_game_button_click)
+        yes_button_label.bind("<Button-1>", yes_tutorial_button_click)
 
         no_button_image = Image.open("resources/no_button.png")
         no_photoimage = ImageTk.PhotoImage(no_button_image)
         no_button_label = tk.Label(tutorial_options_window, image=no_photoimage, bg="#024762")
         no_button_label.place(x=260, y=205)
         no_button_label.photo = no_photoimage
-        no_button_label.bind("<Button-1>", no_game_button_click)
+        no_button_label.bind("<Button-1>", no_tutorial_button_click)
         
+    def open_settings_toplevel(self):
+        settings_options_window = tk.Toplevel(self.root)
+        settings_options_window.title("Settings Options")
+        settings_options_window.geometry("500x380")
+        settings_options_window['bg'] = "#024762"
+
+        def yes_settings_button_click(event):
+            settings_options_window.destroy()  # Close the top-level window
+            self.main_menu()          # Return to the main menu
+
+        def no_settings_button_click(event):
+            settings_options_window.destroy()  # Close the top-level window
+
+        settings_options_window.grab_set()  # Prevent interactions with the main window
+
+        quit_settings_image = Image.open("resources/quit_settings?.png")
+        quit_settings_photoimage = ImageTk.PhotoImage(quit_settings_image)
+        quit_settings_label = tk.Label(settings_options_window, image=quit_settings_photoimage, bg="#024762")
+        quit_settings_label.place(x=7, y=50)
+        quit_settings_label.photo = quit_settings_photoimage
+
+        yes_button_image = Image.open("resources/yes_button.png")
+        yes_photoimage = ImageTk.PhotoImage(yes_button_image)
+        yes_button_label = tk.Label(settings_options_window, image=yes_photoimage, bg="#024762")
+        yes_button_label.place(x=50, y=200)
+        yes_button_label.photo = yes_photoimage
+        yes_button_label.bind("<Button-1>", yes_settings_button_click)
+
+        no_button_image = Image.open("resources/no_button.png")
+        no_photoimage = ImageTk.PhotoImage(no_button_image)
+        no_button_label = tk.Label(settings_options_window, image=no_photoimage, bg="#024762")
+        no_button_label.place(x=260, y=205)
+        no_button_label.photo = no_photoimage
+        no_button_label.bind("<Button-1>", no_settings_button_click)
 
 class SpellingGame:
     def __init__(self, root):
@@ -387,11 +422,11 @@ class SpellingGame:
         game_options_window.geometry("500x380")
         game_options_window['bg'] = "#024762"
 
-        def yes_game_button_click(event):
+        def yes_tutorial_button_click(event):
             game_options_window.destroy()  # Close the top-level window
             self.go_to_main_menu()          # Return to the main menu
 
-        def no_game_button_click(event):
+        def no_tutorial_button_click(event):
             game_options_window.destroy()  # Close the top-level window
 
         game_options_window.grab_set()  # Prevent interactions with the main window
@@ -407,14 +442,14 @@ class SpellingGame:
         yes_button_label = tk.Label(game_options_window, image=yes_photoimage, bg="#024762")
         yes_button_label.place(x=50, y=200)
         yes_button_label.photo = yes_photoimage
-        yes_button_label.bind("<Button-1>", yes_game_button_click)
+        yes_button_label.bind("<Button-1>", yes_tutorial_button_click)
 
         no_button_image = Image.open("resources/no_button.png")
         no_photoimage = ImageTk.PhotoImage(no_button_image)
         no_button_label = tk.Label(game_options_window, image=no_photoimage, bg="#024762")
         no_button_label.place(x=260, y=205)
         no_button_label.photo = no_photoimage
-        no_button_label.bind("<Button-1>", no_game_button_click)
+        no_button_label.bind("<Button-1>", no_tutorial_button_click)
     
 
     
