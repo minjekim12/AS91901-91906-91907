@@ -165,6 +165,30 @@ class SpellCraftApp:
         )
         self.share_button.place(x=600, y=388)
 
+        # Create a Tkinter Scale widget for game duration control
+        self.duration_scale = tk.Scale(
+            self.root,
+            from_=20, to=200,  # Adjust the range as needed (e.g., from 30 seconds to 300 seconds)
+            orient="horizontal",
+            label="          GAME DURATION",
+            font=("DIN Alternate", 14),
+            sliderlength=20,
+            showvalue=1,
+            length=170,
+            command=self.update_duration,  # This function will be called when the slider is moved
+        )
+        self.duration_scale.set(60)  # Set an initial duration (adjust as needed)
+        self.duration_scale.place(x=590, y=215)  # Adjust the placement as needed
+
+    
+    def update_duration(self, value):
+        # Update the game's duration based on the value from the Scale widget
+        self.game_duration = int(value)  # Store the new duration in a variable
+
+        # You can print or use self.game_duration as needed for your game logic
+        print(f"New game duration: {self.game_duration} seconds")
+
+
     def start_game(self):
         self.main_menu_bg_label.destroy()
         self.game_description_label.destroy()
@@ -175,9 +199,10 @@ class SpellCraftApp:
         self.game_bg = ImageTk.PhotoImage(self.game_bg_open)
         self.game_bg_label = tk.Label(self.root, image=self.game_bg)
         self.game_bg_label.place(x=0, y=0)
-        game = SpellingGame(self.root)
+        game = SpellingGame(self.root, self.game_duration)
         self.in_game_page = True
         game.start_game()  # Start the game and the timer
+        
 
 
     def open_toplevel(self):
@@ -290,15 +315,21 @@ class SpellCraftApp:
         webbrowser.open("https://github.com/minjekim12/AS91901-91906-91907",new=1)
 
 class SpellingGame:
-    def __init__(self, root):
+    def __init__(self, root, game_duration):
         self.root = root
         self.root.title("Spelling Game")
 
         
         
         self.score = 0
-        self.time_left = 60
+        self.time_left = game_duration  # Use the provided game duration
+        self.game_duration = game_duration
         self.timer_running = False  # New attribute to track the timer status
+
+
+    
+        
+        
         
         
         self.letter_label = tk.Label(root, text="", font=("DIN Alternate", 40),bg="#98eaf4", fg="black", borderwidth=0,highlightbackground="white")
@@ -416,12 +447,14 @@ class SpellingGame:
     def restart_game(self):
         self.entry.config(state="normal")
         self.score = 0
-        self.time_left = 60  # Reset the timer to its initial value
+        self.time_left = self.game_duration  # Reset the timer to its initial value
         self.update_letter()
         self.score_label.config(text="Score: 0")
-        self.timer_label.config(text="Time left: 60")
+        self.timer_label.config(text=f"Time left: {self.time_left}")
         self.entry.delete(0, tk.END)
+        self.timer_running = True  # Start the timer
         self.countdown()
+        
         pygame.mixer.music.play()
  
     def go_to_main_menu(self):
