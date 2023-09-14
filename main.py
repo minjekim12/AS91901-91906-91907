@@ -35,6 +35,7 @@ class SpellCraftApp:
 
         self.main_menu()
         self.game_duration = 60
+        self.volume = 0.5  # Set an initial volume level 
 
     def main_menu(self):
         self.mainmenu_open = Image.open("resources/main_menu_bg.png")
@@ -181,6 +182,21 @@ class SpellCraftApp:
         self.duration_scale.set(60)  # Set an initial duration (adjust as needed)
         self.duration_scale.place(x=590, y=215)  # Adjust the placement as needed
 
+        # Create a Tkinter Scale widget for volume control
+        self.volume_scale = tk.Scale(
+            self.root,
+            from_=0, to=100,  # Volume range is from 0% to 100%
+            orient="horizontal",
+            label="            VOLUME",
+            font=("DIN Alternate", 14),
+            sliderlength=20,
+            showvalue=1,
+            length=140,
+            command=self.update_volume,  # Function to update volume
+        )
+        self.volume_scale.set(100)  # Set the initial volume level
+        self.volume_scale.place(x=183, y=395)  # Adjust placement as needed
+
     
     def update_duration(self, value):
         # Update the game's duration based on the value from the Scale widget
@@ -188,6 +204,16 @@ class SpellCraftApp:
 
         # You can print or use self.game_duration as needed for your game logic
         print(f"New game duration: {self.game_duration} seconds")
+
+    def update_volume(self, value):
+        # Update the volume based on the value from the Scale widget (0 to 100)
+        self.volume = int(value) / 100.0  # Convert to a decimal value between 0 and 1
+
+        # Update the volume of your audio playback (adjust as needed)
+        pygame.mixer.music.set_volume(self.volume)
+
+        # You can print or use self.volume as needed for your audio control
+        print(f"New volume: {self.volume * 100}%")
 
 
     def start_game(self):
