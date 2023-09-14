@@ -34,6 +34,7 @@ class SpellCraftApp:
         self.root.geometry(f"{self.window_width}x{self.window_height}+{self.center_x}+{self.center_y}")
 
         self.main_menu()
+        self.game_duration = 60
 
     def main_menu(self):
         self.mainmenu_open = Image.open("resources/main_menu_bg.png")
@@ -201,7 +202,7 @@ class SpellCraftApp:
         self.game_bg_label.place(x=0, y=0)
         game = SpellingGame(self.root, self.game_duration)
         self.in_game_page = True
-        game.start_game()  # Start the game and the timer
+        game.start_game()
         
 
 
