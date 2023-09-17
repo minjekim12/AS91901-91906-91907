@@ -36,6 +36,8 @@ class SpellCraftApp:
         self.main_menu()
         self.game_duration = 60
         self.volume = 0.5  # Set an initial volume level 
+        self.user_name = ""
+        
 
     def main_menu(self):
         self.mainmenu_open = Image.open("resources/main_menu_bg.png")
@@ -197,6 +199,41 @@ class SpellCraftApp:
         self.volume_scale.set(100)  # Set the initial volume level
         self.volume_scale.place(x=183, y=395)  # Adjust placement as needed
 
+        self.name_entry = tk.Entry(
+            self.root,
+            font=("DIN Alternate", 18),
+            bg="white",
+            fg="black",
+            borderwidth=0,
+            highlightbackground="white",
+            width=12,
+        )
+        self.name_entry.place(x=155, y=210)
+
+        self.submit_name_button = tk.Button(
+            self.root,
+            text="Submit",
+            font=("DIN Alternate", 14),
+            bg="blue",
+            padx=7,
+            pady=5,
+            borderwidth=0,
+            highlightbackground="#98eaf4",
+            command=self.update_user_name,
+        )
+        self.submit_name_button.place(x=280, y=209)
+
+        # Update the name_entry with the stored user name
+        self.name_entry.delete(0, tk.END)
+        self.name_entry.insert(0, self.user_name)
+
+        
+    def update_user_name(self):
+        # Update the user_name variable with the text from the Entry widget
+        self.user_name = self.name_entry.get()
+
+        # You can print or use self.user_name as needed
+        print(f"User name: {self.user_name}")
     
     def update_duration(self, value):
         # Update the game's duration based on the value from the Scale widget
@@ -458,13 +495,31 @@ class SpellingGame:
         self.root.after(0, self.start_timer)  # Start the timer when the game starts
         self.update_letter()
 
-    def finish_game(self):
+    """def finish_game(self):
         self.entry.config(state="disabled")
         self.stop_timer()
         pygame.mixer.music.stop()
         
         # Display a messagebox with score and options
         choice = messagebox.askquestion("Game Over", f"Your score: {self.score}\n\nRestart the game?", icon="info")
+        
+        if choice == "yes":
+            self.restart_game()
+        else:
+            self.go_to_main_menu()"""
+
+    def finish_game(self):
+        self.entry.config(state="disabled")
+        self.stop_timer()
+        pygame.mixer.music.stop()
+        
+        # Determine the message based on whether the user submitted a name
+        if app.user_name:
+            message = f"Game Over, {app.user_name}!\nYour score: {self.score}\n\nRestart the game?"
+        else:
+            message = f"Game Over!\nYour score: {self.score}\n\nRestart the game?"
+
+        choice = messagebox.askquestion("Game Over", message, icon="info")
         
         if choice == "yes":
             self.restart_game()
