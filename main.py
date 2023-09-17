@@ -219,21 +219,27 @@ class SpellCraftApp:
             pady=5,
             borderwidth=0,
             highlightbackground="#98eaf4",
-            command=self.update_user_name,
+            command=self.submit_user_name,
         )
         self.submit_name_button.place(x=280, y=209)
+        
 
         # Update the name_entry with the stored user name
         self.name_entry.delete(0, tk.END)
         self.name_entry.insert(0, self.user_name)
 
-        
-    def update_user_name(self):
-        # Update the user_name variable with the text from the Entry widget
-        self.user_name = self.name_entry.get()
+    def submit_user_name(self):
+        user_name = self.name_entry.get()
+        if user_name.isalpha():
+            self.user_name = user_name
+            messagebox.showinfo("Name Submitted", f"Your name: {self.user_name}")
+        elif user_name == "":
+            self.user_name = user_name
+            messagebox.showinfo("Name Removed", f"Player name set to none.")
+        else:
+            messagebox.showerror("Name Invalid", f"Error: Name must only include alphabets.", icon = 'warning')
 
-        # You can print or use self.user_name as needed
-        print(f"User name: {self.user_name}")
+   
     
     def update_duration(self, value):
         # Update the game's duration based on the value from the Scale widget
