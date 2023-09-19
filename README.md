@@ -2,13 +2,10 @@
 
 # SpellCraft 
 
-Spellcraft is a Literacy Quiz Game that tests the players spelling skills. Players will be given an incomplete word, with the word also having a certain amount of letters required to complete it. For example : b _ _ t. Then the player has to come up with as many words they can think of while the timer is running. 
-
-If they type in a word registered in the dictionary, the score will go up. words like Boot, Boat, Beat, etc. Incorrect words will not count towards the score : Bullet (too many letters) Goat (incorrect letters) Bxyt (not a real word) 
-
-Every time a different word in the same given incomplete word is submitted, they will gain +1 extra point. For example : Boot (+1), Boat(+2), Beat(+3). Once the timer runs out, the given word changes, and the score bonus comes back down to 1. 
-
-The game will continue as long as the user can input more than 2 different words for the same prompt.
+SpellCraft is an interactive literacy quiz program
+            that allows learners to be engaged and encouraged
+            to test and develop their English vocabulary
+            and spelling skills.
 
 
 ## Getting Started
@@ -21,6 +18,9 @@ Windows 10 or higher OR Mac OS X or higher
 Code Editor (preferably VSCODE) 
 Latest version of Python
 Tkinter
+PIL (https://pypi.org/project/Pillow/) 
+Pygame (https://www.pygame.org/news)
+Webbrowser (https://docs.python.org/3/library/webbrowser.html)
 
 
 ## Built With
@@ -28,6 +28,8 @@ Tkinter
 * Python 
 * Tkinter - Python Module to acquire user interface
 * VsCode - Code Editor
+* Pygame - Usage of pygame mixer to add background music and control volume
+* Webbrowser - For users to open the GitHub Repository for this project on their browser, see settings > share.
 
 ## Versioning
 
@@ -38,11 +40,4 @@ We use GitHub for versioning. For the versions available, see the [tags on this 
 * **Minje Kim** - [GitHub Profile](https://github.com/minjekim12)
 
 
-## License
-
-No License
-
-## Acknowledgments
-
-To be completed later
 
