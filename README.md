@@ -14,13 +14,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Windows 10 or higher OR Mac OS X or higher
-Code Editor (preferably VSCODE) 
-Latest version of Python
-Tkinter
-PIL (https://pypi.org/project/Pillow/) 
-Pygame (https://www.pygame.org/news)
-Webbrowser (https://docs.python.org/3/library/webbrowser.html)
+* Windows 10 or higher OR Mac OS X or higher
+* Code Editor (preferably VSCODE) 
+* Latest version of Python
+* Tkinter
+* PIL (https://pypi.org/project/Pillow/) 
+* Pygame (https://www.pygame.org/news)
+* Webbrowser (https://docs.python.org/3/library/webbrowser.html)
 
 
 ## Built With
